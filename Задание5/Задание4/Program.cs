@@ -171,7 +171,7 @@ namespace Задание4
             Print(b, length);
         }
 
-        static void difference(int[] a, int[] b, int length, int k)
+        static void Difference(int[] a, int[] b, int length, int k)
         {
             int[] c = new int[SIZE_ARRAY];
 
@@ -200,7 +200,7 @@ namespace Задание4
                 i--;
 
             if (k == 2)
-                c[i] *= -1;//если из меньш больш вычитаем
+                c[i] *= -1;//если из меньшего числа вычитаем большее
 
             Print(c, i + 1);
         }
@@ -235,49 +235,106 @@ namespace Задание4
                     }
                 }
 
-            if (k == 1) difference(a, b, length, k);
-            if (k == 2) difference(b, a, length, k);
+            if (k == 1) Difference(a, b, length, k);
+            if (k == 2) Difference(b, a, length, k);
             if (k == 3)
                 Console.WriteLine(0);
+        }
+        static int InputInt(string msg, int left, int right)//ввод целого числа с проверкой границ и правильности ввода 
+        {
+            bool ok = false;
+            int number = -100;
+            do
+            {
+                Console.WriteLine(msg);
+                try
+                {
+                    number = Convert.ToInt32(Console.ReadLine());
+                    if (number >= left && number < right) ok = true;
+                    else
+                    {
+                        Console.WriteLine("Ошибка ввода");
+                        ok = false;
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Ошибка ввода");
+                    ok = false;
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("Ошибка ввода");
+                    ok = false;
+                }
+            } while (!ok);
+            return number;
         }
 
         static void Main(string[] args)
         {
-            //int[] num1 = new int[SIZE_ARRAY];
-            //int n1;
-            //FormNum(num1, out n1);
+            int ch = 0;
 
-            //int[] num2 = new int[SIZE_ARRAY];
-            //int n2;
-            //FormNum(num2, out n2);
+            do
+            {
+                Console.WriteLine("Выберите, что вы хотите вычислить:");
+                Console.WriteLine("1. Сумму");
+                Console.WriteLine("2. Разность");
+                Console.WriteLine("3. Выход");
 
-            //int[] c = new int[SIZE_ARRAY];
-            //int l;
+                ch = InputInt("", 1, 4); //3 пункта меню
+                switch (ch)
+                {
+                    case 1:
+                        {
+                            int size1;
 
-            //Umn(n1, n2, num1, num2, c, out l);
+                            int[] num1 = CalcFactor(out size1);
 
-            int size1;
+                            Console.WriteLine("Факториал");
 
-            int[] num1 = CalcFactor(out size1);
+                            Print(num1, size1);
 
-            Console.WriteLine("Факториал");
 
-            Print(num1, size1);
+                            int size2;
+                            int[] num2 = CalcStepen(out size2);
 
-            int size2;
+                            Console.WriteLine("Степень");
 
-            int[] num2 = CalcStepen(out size2);
+                            Print(num2, size2);
 
-            Console.WriteLine("Степень");
+                            Console.WriteLine("Сумма");
 
-            Print(num2, size2);
+                            Sum(size1, size2, num1, num2);
+                            break;
+                        }
+                    case 2:
+                        {
+                            int size1;
 
-            Console.WriteLine("Сумма");
+                            int[] num1 = CalcFactor(out size1);
 
-            //Diff(size1, size2, num1, num2);
-            Sum(size1, size2, num1, num2);
+                            Console.WriteLine("Факториал");
 
-            Console.ReadLine();
+                            Print(num1, size1);
+
+
+                            int size2;
+                            int[] num2 = CalcStepen(out size2);
+
+                            Console.WriteLine("Степень");
+
+                            Print(num2, size2);
+
+                            Console.WriteLine("Разность");
+
+                            Diff(size1, size2, num1, num2);
+                            break;
+                        }
+                        //Console.ReadLine();       
+                }
+            } while (ch < 3);
         }
     }
 }
+   
